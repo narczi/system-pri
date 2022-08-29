@@ -1,6 +1,5 @@
 from rest_framework import routers
-from harmonogramobron.viewsets import ProwadzacyViewset, HarmonogramViewset
+from defenseSchedule.viewsets import PersonViewset
 
 router = routers.DefaultRouter()
-router.register('prowadzacy', ProwadzacyViewset)
-router.register('harmonogram', HarmonogramViewset)
+router.register('person', PersonViewset)

@@ -5,15 +5,16 @@ import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 import { register, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
+import { createSchedule } from "../features/schedule/scheduleSlice";
 
 function Register() {
   const [formData, setFormData] = useState({
-    imie: "",
-    nazwisko: "",
-    rola: "",
+    name: "",
+    surname: "",
+    role: "",
   });
 
-  const { imie, nazwisko, rola } = formData;
+  const { name, surname, role } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,6 +29,11 @@ function Register() {
     }
 
     if (isSuccess || user) {
+      const scheduleData = {
+        schedule: [],
+        opiekun: user.name + ' ' + user.surname
+      }
+      dispatch(createSchedule(scheduleData))
       navigate("/");
     }
 
@@ -44,24 +50,12 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // if (password !== password2) {
-    //   toast.error("Passwords do not match");
-    // } else {
-    //   const userData = {
-    //     name,
-    //     email,
-    //     password,
-    //     schedule: [],
-    //   };
-
-    // }
     const userData = {
-      imie,
-      nazwisko,
-      rola,
+      name,
+      surname,
+      role,
     };
-    console.log("userdata daje:", userData);
-    dispatch(register(userData));
+    dispatch(register(userData))
   };
 
   if (isLoading) {
@@ -83,10 +77,10 @@ function Register() {
             <input
               type="text"
               className="form-control"
-              id="imie"
-              name="imie"
-              value={imie}
-              placeholder="Enter your imie"
+              id="name"
+              name="name"
+              value={name}
+              placeholder="Enter your name"
               onChange={onChange}
             />
           </div>
@@ -94,10 +88,10 @@ function Register() {
             <input
               type="text"
               className="form-control"
-              id="nazwisko"
-              name="nazwisko"
-              value={nazwisko}
-              placeholder="Enter your nazwisko"
+              id="surname"
+              name="surname"
+              value={surname}
+              placeholder="Enter your surname"
               onChange={onChange}
             />
           </div>
@@ -105,10 +99,10 @@ function Register() {
             <input
               type="text"
               className="form-control"
-              id="rola"
-              name="rola"
-              value={rola}
-              placeholder="Enter your rola"
+              id="role"
+              name="role"
+              value={role}
+              placeholder="Enter your role"
               onChange={onChange}
             />
           </div>
